@@ -1,0 +1,10 @@
+select date_credit
+      ,credit_value
+      ,age
+      ,education_text as education_type
+      ,id_client
+from sql_group_task_step_2.credit_info i
+   left join sql_group_task_step_2.dim_education e
+         on i.education=e.education_idx
+where date_credit between '2010-01-15' and '2021-05-15'
+   and credit_value != '0'
