@@ -1,0 +1,34 @@
+with age_group as 
+(
+select date_credit
+      ,age
+      ,credit_value
+      ,case when(age) between 18 and 25 then '18-25'
+            when(age) between 26 and 35 then '25-35'
+            when(age) between 36 and 45 then '35-45'
+            when(age) between 46 and 60 then '45-60'
+            when(age) > 60 then '60' 
+            when(age) > 0 then 'all'end as age_group
+from sql_group_task_step_2.credit_info 
+group by 1,2,3,4
+)
+,count_in_age_group as
+(
+select age_group
+      ,date_credit
+      ,count(credit_value) as count_in_age_group
+from age_group
+group by date_credit
+        ,age_group
+order by date_credit
+        ,age_group
+)
+select date_trunc('month',date_credit) as date_credit
+      ,1.0*(sum(case when age_group='18-25' then count_in_age_group end)/sum(count_in_age_group)) as "18-25"
+      ,1.0*(sum(case when age_group='25-35' then count_in_age_group end)/sum(count_in_age_group)) as "25-35"
+      ,1.0*(sum(case when age_group='35-45' then count_in_age_group end)/sum(count_in_age_group)) as "35-45"
+      ,1.0*(sum(case when age_group='45-60' then count_in_age_group end)/sum(count_in_age_group)) as "45-60"
+      ,1.0*(sum(case when age_group='60' then count_in_age_group end)/sum(count_in_age_group)) as "60"
+from  count_in_age_group 
+group by date_trunc('month',date_credit)
+order by date_credit
