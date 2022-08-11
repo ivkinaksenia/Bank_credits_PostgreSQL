@@ -1,0 +1,3 @@
+select date_credit 
+from sql_group_task_step_1.credit_info
+where credit_value = (select max(credit_value) from sql_group_task_step_1.credit_info)
