@@ -1,0 +1,5 @@
+select date_trunc('day',date_credit) as day
+      ,avg(age)as avg_age
+from sql_group_task_step_2.credit_info
+group by day
+order by day asc
