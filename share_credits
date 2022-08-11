@@ -1,0 +1,17 @@
+with count_credit as
+   (
+   select education_text as education
+         ,date_trunc('month',date_credit)as date
+         ,count(distinct id_credit)as count_credit
+   from sql_group_task_step_2.credit_info i
+      left join sql_group_task_step_2.dim_education e
+         on i.education=e.education_idx
+   where education_idx != 4
+   group by 1,2
+   ) 
+select date
+,education
+      ,count_credit / (select sum(count_credit) from count_credit) as credit_share
+from count_credit
+group by education, count_credit, date
+order by date asc
