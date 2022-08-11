@@ -1,0 +1,5 @@
+select credit_type
+      ,count(id_credit)
+from sql_group_task_step_3.credit_info
+where date_credit between '2011-01-01' and '2011-01-31'
+group by credit_type
