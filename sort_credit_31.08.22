@@ -1,0 +1,3 @@
+select *
+from sql_group_task_step_3.credit_info
+where date_credit+make_interval(months => credit_period)<='2020-08-31'
