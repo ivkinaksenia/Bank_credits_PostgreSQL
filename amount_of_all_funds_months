@@ -1,0 +1,5 @@
+select id_client
+      ,extract('month' from date_credit)as month
+      ,1.0*sum(credit_value)/nullif(sum (bks),0) as credit_share
+from sql_group_task_step_3.credit_info
+group by id_client, month
